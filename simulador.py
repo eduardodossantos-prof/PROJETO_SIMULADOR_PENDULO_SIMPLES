@@ -1,70 +1,48 @@
 import pygame
-import math
+from pygame.locals import *
+from sys import exit
 
 pygame.init()
 
-LARGURA, ALTURA = 800, 600
+largura = 1300
+altura = 680
 
-tela_principal = pygame.display.set_mode((LARGURA, ALTURA))
-pygame.display.set_caption("OSPEND - Simulador de Pendulo Simples")
-relogio = pygame.time.Clock()
+tela = pygame.display.set_mode((largura, altura))
+pygame.display.set_caption('Pendulo Simulation')
 
-BRANCO = (
-    255,
-    255,
-    255
-    )
-CINZA = (
-    150,
-    150,
-    150
-    )
-BLACK = (
-    0,
-    0,
-    0
-    )
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit
+            exit()
+        pygame.display.update()
 
-#Calcula a posição onde o teto vai ficar preso.
-origem_x, origem_y = LARGURA // 2, 100
+        #DESENHANDO O TETO DO SIMULADOR
+        pygame.draw.rect(
+            tela, (150,75,0), (0, 0, 1300, 70)
+        )
+        #FIM DESENHANDO O TETO DO SIMULADOR
 
-comprimento = 300
-angulo = math.radians(10)
+        #DESENHANDO A LINHA DO SIMULADOR
+        pygame.draw.line(
+            tela, (255,255,255), (400, 70), (400, 500), 6
+        )
+        #FIM DO DESENHO DA LINHA DO SIMULADOR
 
+        #DESENHANDO O CIRCUITO DA MASSA ESFERICA DO PENDULO 
+        pygame.draw.circle(
+            tela, (255,255,255), (400,500), 50
+        ) 
+        #FIM DO DESENHO DA MASSA ESFERICA DO PENDULO
 
-rodando = True
-while rodando:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            rodando = False
-    relogio.tick(27) #Ela define a velocidade de execução do meu simulador que vem de python.time.clock()
-    tela_principal.fill(BRANCO)
+        #DESENHANDO A TABELA DE DADOS DO SIMULADOR
+        pygame.draw.rect(
+            tela, (255,255,255), (880, 100, 400, 450) 
+        )
+        #FIM DO DESENHAR A TABELA DE DADOS DO SIMULADOR
 
-    #Calcula a posição onde a bolinha vai ficar.
-    bolinha_x = origem_x + comprimento * math.sin(angulo)
-    bolinha_y = origem_y + comprimento * math.cos(angulo)
-
-    pygame.draw.line(
-        tela_principal, 
-        BLACK , 
-        (origem_x - 1000, origem_y - 100), 
-        (origem_x + 1000, origem_y - 100), 
-        100
-    )
-    pygame.draw.line(
-        tela_principal,
-        BLACK,
-        (origem_x - 10, origem_y - 50), 
-        (bolinha_x - 60, bolinha_y),
-        3
-    )
-    pygame.draw.circle(
-        tela_principal,
-        CINZA, 
-        (bolinha_x - 60, bolinha_y),
-        60, 
-        100
-    )
-    pygame.display.update() #atualiza a tela a dentro do loop
-
-pygame.quit()
+        #DESENHANDO A TABELA MANUAL DE DADOS
+        pygame.draw.rect(
+            tela, (255,255,255), (880, 570, 400, 80)
+        )
+        #FIM DO DESENHO DA TABELA MANUAL DE DADOS
